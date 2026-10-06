@@ -1,0 +1,35 @@
+# Check BitLocker
+Get-BitLockerVolume -MountPoint "C:"
+
+# Suspend BitLocker for one reboot
+Suspend-BitLocker -MountPoint "C:" -RebootCount 1
+
+# After reboot, check it again
+Get-BitLockerVolume -MountPoint "C:"
+
+# If ProtectionStatus is still Off, resume it
+Resume-BitLocker -MountPoint "C:"
+
+# Final verification
+Get-BitLockerVolume -MountPoint "C:"
+
+# 1. Check BitLocker status
+Get-BitLockerVolume -MountPoint "C:"
+
+# 2. Temporarily suspend BitLocker for the next reboot
+Suspend-BitLocker -MountPoint "C:" -RebootCount 1
+
+# 3. Temporarily allow PowerShell modules in this window
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+# 4. Load Windows Update module
+Import-Module PSWindowsUpdate
+
+# 5. Check available updates
+Get-WindowsUpdate
+
+# 6. Install all available updates
+Install-WindowsUpdate -AcceptAll
+
+# 7. Reboot when installation finishes
+Restart-Computer
