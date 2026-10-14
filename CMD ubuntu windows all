@@ -50,8 +50,12 @@ lsb_release -a & uname -r - OS release and kernel version
 
 sudo systemctl status nexposeengine
 
+sudo ufw status verbose
+
 # 2. Check Listening Port (40814)
 sudo ss -tulpn | grep 40814
+sudo iptables -L OUTPUT -n -v
+nc -zv -w 3 portquiz.net 443
 
 # 3. Check for Engine Errors and Warnings
 tail -n 50 /opt/rapid7/nexpose/nse/logs/nsc.log | grep -E "ERROR|WARN"
